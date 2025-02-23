@@ -1,0 +1,8 @@
+# requirements.txt
+
+# Core dependencies
+transformers              # For DeepSeek R1 and Ollama models
+torch                      # PyTorch backend for transformers
+faiss-cpu                 # For efficient document retrieval
+numpy                     # For numerical operations (used by FAISS)
+pandas
