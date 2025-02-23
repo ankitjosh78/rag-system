@@ -22,7 +22,7 @@ Before running the project, ensure you have the following installed:
 2. **Ollama**: [Install Ollama](https://github.com/jmorganca/ollama)
 3. **DeepSeek 1.5B Model**: Pull the model using Ollama:
    ```bash
-   ollama run deepseek-r1:1.5b
+   ollama pull deepseek-r1:1.5b
    ```
   
 ## Project Structure
