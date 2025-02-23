@@ -1,4 +1,4 @@
-# RAG System with DeepSeek 1.5B and Ollama
+# RAG System with DeepSeek R1:1.5B and Ollama
 
 This project implements a **Retrieval-Augmented Generation (RAG)** system using the **DeepSeek 1.5B model** (via Ollama) for generating responses and **FAISS** for efficient document retrieval. The system supports querying over a collection of documents, including **text files**, **JSON files**, and other formats.
 
