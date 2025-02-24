@@ -8,3 +8,6 @@ numpy                     # For numerical operations (used by FAISS)
 pandas                    # For data processing
 sentence_transformers     # For embedding of sentences
 customtkinter             # For UI
+PyPDF2		          # For parsing PDF
+pdf2image		  # For PDF to Image conversion
+pytesseract		  # For OCR detection

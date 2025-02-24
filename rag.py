@@ -4,6 +4,9 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 import json
 import os
+import PyPDF2
+from pdf2image import convert_from_path
+import pytesseract
 
 
 class RAGSystem:
@@ -31,6 +34,8 @@ class RAGSystem:
             elif file_name.endswith(".txt"):
                 with open(file_path, "r") as file:
                     text = file.read()
+            elif file_name.endswith(".pdf"):
+                text = self.load_pdf(file_path)
             else:
                 continue  # Skip unsupported file types
             documents.append(text)
@@ -49,6 +54,23 @@ class RAGSystem:
                 )
             else:
                 return str(data)  # Fallback for other JSON structures
+
+    def load_pdf(self, file_path):
+        """Extract text from a PDF file."""
+        text = ""
+        with open(file_path, "rb") as file:
+            reader = PyPDF2.PdfReader(file)
+            for page in reader.pages:
+                text += page.extract_text()
+        return text
+
+    def load_pdf_with_ocr(self, file_path):
+        """Extract text from a PDF file using OCR."""
+        text = ""
+        images = convert_from_path(file_path)
+        for image in images:
+            text += pytesseract.image_to_string(image)
+        return text
 
     def generate_response(self, query):
         # Retrieve relevant documents

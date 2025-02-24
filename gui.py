@@ -1,5 +1,7 @@
 import customtkinter as ctk
-from tkinter import scrolledtext
+from tkinter import scrolledtext, filedialog
+import shutil
+import os
 from rag import RAGSystem
 
 
@@ -35,6 +37,15 @@ class RAGApp:
         )
         self.submit_button.pack(pady=10)
 
+        # Upload Documents button
+        self.upload_button = ctk.CTkButton(
+            self.input_frame,
+            text="Upload Documents",
+            command=self.upload_documents,
+            font=("Arial", 14),
+        )
+        self.upload_button.pack(pady=10)
+
         # Create a frame for the response section
         self.response_frame = ctk.CTkFrame(root)
         self.response_frame.pack(pady=20, padx=20, fill="both", expand=True)
@@ -58,3 +69,27 @@ class RAGApp:
             ctk.INSERT,
             f"Retrieved Documents:\n{retrieved_docs}\n\nResponse:\n{response}",
         )
+
+    def upload_documents(self):
+        """Open a file dialog to upload documents and copy them to the 'documents' folder."""
+        # Open file dialog to select documents
+        file_paths = filedialog.askopenfilenames(
+            title="Select Documents",
+            filetypes=[("PDF Files", "*.pdf"), ("Text Files", "*.txt"), ("JSON Files", "*.json")],
+        )
+
+        if file_paths:
+            # Ensure the 'documents' folder exists
+            documents_folder = "documents"
+            os.makedirs(documents_folder, exist_ok=True)
+
+            # Copy selected files to the 'documents' folder
+            for file_path in file_paths:
+                file_name = os.path.basename(file_path)
+                destination_path = os.path.join(documents_folder, file_name)
+                shutil.copy(file_path, destination_path)
+                print(f"Copied {file_name} to {documents_folder}")
+
+            # Reload documents in the RAG system
+            self.rag_system = RAGSystem()  # Reinitialize the RAG system to load new documents
+            print("Success", f"{len(file_paths)} documents uploaded successfully!")
